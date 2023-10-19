@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<HTML>
+
+<head>
+    <title>Sorteia Joke</title>
+</head>
+
+<body>
+    <h1>S&oacute; as piores das piores ;)</h1>
+    <p id="piada-placeholder">Carregando...</p>
+    <button id="get-piada-button">Gerar Piada</button>
+
+    <script>
+        const piadaPlaceholder = document.getElementById("piada-placeholder");
+        const getPiadaButton = document.getElementById("get-piada-button");
+
+        async function fetchRandomPiada() {
+            try {
+                const response = await fetch('https://api-de-piadas.onrender.com/piadas');
+                const data = await response.json();
+
+                const randomIndex = Math.floor(Math.random() * data.length);
+                const randomPiada = data[randomIndex].piada;
+                
+                piadaPlaceholder.textContent = randomPiada;
+            } catch (error) {
+                console.error(error);
+                piadaPlaceholder.textContent = "Erro ao recuperar piada";
+            }
+        }
+
+        getPiadaButton.addEventListener('click', fetchRandomPiada);
+
+        fetchRandomPiada();
+    </script>
+</body>
+
+</HTML>
